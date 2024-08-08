@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import datetime
 from PIL import Image, ImageDraw, ImageFont
+from streamlit_drawable_canvas import st_canvas
 
 
 st.title("AHS Map")
@@ -94,12 +95,23 @@ if uploaded_file is not None:
   #BEGINNING OF HEATMAP (?) CODE
    
   im1 = Image.open("assets/Screenshot 2024-07-26 120058.png")
+  st.write("Click on the map to get temperature details.")
+    canvas_result = st_canvas(
+        fill_color="rgba(255, 165, 0, 0.3)",  # Fills the circle with orange
+        stroke_width=5,
+        background_image=floor_plan,
+        update_streamlit=True,
+        height=floor_plan.height,
+        width=floor_plan.width,
+        drawing_mode="point",
+        key="canvas",
+    )
   #im2
   #im3
   
   
-  fig, ax = plt.subplots()
-  ax.imshow(im1)
+  #fig, ax = plt.subplots()
+  #ax.imshow(im1)
   #st.image(im1, caption='School Map', use_column_width=True)
   
   draw = ImageDraw.Draw(im1)
@@ -157,32 +169,29 @@ if uploaded_file is not None:
       x, y = coord
       ax.plot(x, y, 'ro')  # 'ro' means red dot
 
-  st.pyplot(fig)
+  
   was_sensor_clicked = {}
   # Function to display temperature when a dot is clicked
-  def find_closest_sensor(x_click, y_click):
-      closest_sensor = None
-      min_distance = float('inf')
-      
-      for sensor, (x, y) in coordinates.items():
-          distance = np.sqrt((x_click - x) ** 2 + (y_click - y) ** 2)
-          if distance < min_distance:
-              min_distance = distance
-              closest_sensor = sensor
-      return closest_sensor, min_distance 
-      
-      # If a close enough sensor is found, display its median temperature
-  click_x = st.number_input('Click X Coordinate', value=0)
-  click_y = st.number_input('Click Y Coordinate', value=0)
-
-  if click_x is not None and click_y is not None:
-      closest_sensor, distance = find_closest_sensor(click_x, click_y)
-      if closest_sensor and distance < 10:  # Adjust threshold as needed
-          median_temp = medians_dict.get(closest_sensor, 'N/A')
-          st.write(f'Selected Sensor: {closest_sensor}')
-          st.write(f'Median Temperature: {median_temp:.1f}°F')
-      else:
-          st.write('No sensor found at this location.')
+ if canvas_result.json_data is not None:
+      for obj in canvas_result.json_data["objects"]:
+          x_click = obj["left"]
+          y_click = obj["top"]
+            
+          closest_sensor = None
+          min_distance = float('inf')
+            
+          for sensor, (x, y) in coordinates.items():
+              distance = np.sqrt((x_click - x) ** 2 + (y_click - y) ** 2)
+              if distance < min_distance:
+                  min_distance = distance
+                  closest_sensor = sensor
+            
+          if closest_sensor and min_distance < 20:  # Adjust threshold as needed
+              median_temp = medians_dict.get(closest_sensor, 'N/A')
+              st.write(f'Selected Sensor: {closest_sensor}')
+              st.write(f'Median Temperature: {median_temp:.1f}°F')
+          else:
+              st.write('No sensor found at this location.')
   
   # Connect the click event to the function    
       
