@@ -183,7 +183,7 @@ if uploaded_file is not None:
       plt.draw()  # Update the plot with the text
   
   # Connect the click event to the function    
-  fig.canvas.mpl_connect('button_press_event', on_click)
+  cid = fig.canvas.mpl_connect('button_press_event', on_click)
   
   plt.show()
       
