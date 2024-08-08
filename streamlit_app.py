@@ -95,23 +95,13 @@ if uploaded_file is not None:
   #BEGINNING OF HEATMAP (?) CODE
    
   im1 = Image.open("assets/Screenshot 2024-07-26 120058.png")
-  st.write("Click on the map to get temperature details.")
-  canvas_result = st_canvas(
-      fill_color="rgba(255, 165, 0, 0.3)",  # Fills the circle with orange
-      stroke_width=5,
-      background_image=im1,
-      update_streamlit=True,
-      height=im1.height,
-      width=im1.width,
-      drawing_mode="point",
-      key="canvas",
-  )
+  
   #im2
   #im3
   
   
-  #fig, ax = plt.subplots()
-  #ax.imshow(im1)
+  fig, ax = plt.subplots()
+  ax.imshow(im1)
   #st.image(im1, caption='School Map', use_column_width=True)
   
   draw = ImageDraw.Draw(im1)
@@ -167,26 +157,24 @@ if uploaded_file is not None:
   
   was_sensor_clicked = {}
   # Function to display temperature when a dot is clicked
-  if canvas_result.json_data is not None:
-    for obj in canvas_result.json_data["objects"]:
-        x_click = obj["left"]
-        y_click = obj["top"]
-            
-        closest_sensor = None
-        min_distance = float('inf')
-            
-        for sensor, (x, y) in coordinates.items():
-            distance = np.sqrt((x_click - x) ** 2 + (y_click - y) ** 2)
-            if distance < min_distance:
-                min_distance = distance
-                closest_sensor = sensor
-            
-        if closest_sensor and min_distance < 20:  # Adjust threshold as needed
-            median_temp = medians_dict.get(closest_sensor, 'N/A')
-            st.write(f'Selected Sensor: {closest_sensor}')
-            st.write(f'Median Temperature: {median_temp:.1f}°F')
-        else:
-            st.write('No sensor found at this location.')
+  for sensor, coord in coordinates.items():
+        x, y = coord
+        ax.plot(x, y, 'ro', picker=True)  # Enable picking
+    
+    # Function to display temperature when a dot is clicked
+    def on_pick(event):
+        artist = event.artist
+        x_click, y_click = artist.get_xdata()[0], artist.get_ydata()[0]
+
+        for sensor, coord in coordinates.items():
+            if coord == (x_click, y_click):
+                median_temp = medians_dict.get(sensor, 'N/A')
+                st.write(f'{sensor} Median Temperature: {median_temp:.1f}°F')
+                break
+
+    cid = fig.canvas.mpl_connect('pick_event', on_pick)
+    
+    st.pyplot(fig)
   
   # Connect the click event to the function    
       
@@ -196,7 +184,7 @@ if uploaded_file is not None:
   
   #print(f'Coordinates: ({x}, {y})')
   
-  #fig.canvas.mpl_disconnect(cid)
+  fig.canvas.mpl_disconnect(cid)
 else:
   st.write("Make sure to upload a CSV file from Metasys!")
 
