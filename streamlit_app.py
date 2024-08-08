@@ -160,12 +160,6 @@ if uploaded_file is not None:
   was_sensor_clicked = {}
   # Function to display temperature when a dot is clicked
   def on_click(event):
-      x_click, y_click = event.xdata, event.ydata
-      
-      if x_click is None or y_click is None:
-          return  # Click was outside the image area
-      
-      # Find the closest sensor to the click
       closest_sensor = None
       min_distance = float('inf')
       
@@ -174,17 +168,20 @@ if uploaded_file is not None:
           if distance < min_distance:
               min_distance = distance
               closest_sensor = sensor
+      return closest_sensor, min_distance 
       
       # If a close enough sensor is found, display its median temperature
-      if closest_sensor and min_distance < 10:# Adjust threshold as needed
-          if closest_sensor in was_sensor_clicked:
-              was_sensor_clicked[closest_sensor].remove()
-              del was_sensor_clicked[closest_sensor]
-          else:
-              median_temp = medians_dict[closest_sensor, 'N/A']
-              clicked = ax.text(x_click, y_click, f'{median_temp:.1f}°F', fontsize=12, color='blue')
-              was_sensor_clicked[closest_sensor] = clicked
-          plt.draw()  # Update the plot with the text
+  click_x = st.number_input('Click X Coordinate', value=0)
+  click_y = st.number_input('Click Y Coordinate', value=0)
+
+  if click_x is not None and click_y is not None:
+      closest_sensor, distance = find_closest_sensor(click_x, click_y)
+      if closest_sensor and distance < 10:  # Adjust threshold as needed
+          median_temp = medians_dict.get(closest_sensor, 'N/A')
+          st.write(f'Selected Sensor: {closest_sensor}')
+          st.write(f'Median Temperature: {median_temp:.1f}°F')
+      else:
+          st.write('No sensor found at this location.')
   
   # Connect the click event to the function    
   cid = fig.canvas.mpl_connect('button_press_event', on_click)
