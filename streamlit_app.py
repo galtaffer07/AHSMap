@@ -129,6 +129,8 @@ if uploaded_file is not None:
   filtered_df = carbon_levels_without_holidays[filtered_columns]
   temperature_columns = [col for col in filtered_df.columns if 'T' in col and 'CO2' not in col and 'Q' not in col]
   temperature_df = filtered_df[temperature_columns]
+
+  st.write(temperature_df)
   
   
   coordinates = {
