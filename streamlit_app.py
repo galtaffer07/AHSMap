@@ -156,7 +156,8 @@ if uploaded_file is not None:
   for sensor, coord in coordinates.items():
       x, y = coord
       ax.plot(x, y, 'ro')  # 'ro' means red dot
-  
+
+  st.pyplot(fig)
   was_sensor_clicked = {}
   # Function to display temperature when a dot is clicked
   def find_closest_sensor(x_click, y_click):
@@ -184,8 +185,6 @@ if uploaded_file is not None:
           st.write('No sensor found at this location.')
   
   # Connect the click event to the function    
-  
-  st.pyplot(fig)
       
   
   #print(carbon_levels_without_holidays[firstFloor])
