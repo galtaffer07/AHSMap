@@ -130,7 +130,6 @@ if uploaded_file is not None:
   temperature_columns = [col for col in filtered_df.columns if 'T' in col and 'CO2' not in col and 'Q' not in col]
   temperature_df = filtered_df[temperature_columns]
 
-  st.write(temperature_df)
   
   
   coordinates = {
@@ -151,6 +150,8 @@ if uploaded_file is not None:
   
   medians = temperature_df.median()
   medians_dict = medians.to_dict()
+
+  st.write(medians_dict)
       
   for sensor, coord in coordinates.items():
       x, y = coord
