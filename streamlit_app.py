@@ -94,8 +94,8 @@ if uploaded_file is not None:
   #BEGINNING OF HEATMAP (?) CODE
    
   im1 = Image.open(r"C:\Users\galta\OneDrive\Pictures\Screenshots\Screenshot 2024-07-26 120058.png")
-  im2
-  im3
+  #im2
+  #im3
   
   
   fig, ax = plt.subplots()
