@@ -99,10 +99,10 @@ if uploaded_file is not None:
   canvas_result = st_canvas(
       fill_color="rgba(255, 165, 0, 0.3)",  # Fills the circle with orange
       stroke_width=5,
-      background_image=floor_plan,
+      background_image=im1,
       update_streamlit=True,
-      height=floor_plan.height,
-      width=floor_plan.width,
+      height=im1.height,
+      width=im1.width,
       drawing_mode="point",
       key="canvas",
   )
