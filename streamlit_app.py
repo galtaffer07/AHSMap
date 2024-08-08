@@ -163,11 +163,6 @@ if uploaded_file is not None:
   medians = temperature_df.median()
   medians_dict = medians.to_dict()
 
-  st.write(medians_dict)
-      
-  for sensor, coord in coordinates.items():
-      x, y = coord
-      ax.plot(x, y, 'ro')  # 'ro' means red dot
 
   
   was_sensor_clicked = {}
