@@ -172,9 +172,9 @@ if uploaded_file is not None:
               st.write(f'{sensor} Median Temperature: {median_temp:.1f}°F')
               break
 
-    cid = fig.canvas.mpl_connect('pick_event', on_pick)
+  cid = fig.canvas.mpl_connect('pick_event', on_pick)
     
-    st.pyplot(fig)
+  st.pyplot(fig)
   
   # Connect the click event to the function    
       
