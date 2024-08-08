@@ -100,6 +100,7 @@ if uploaded_file is not None:
   
   fig, ax = plt.subplots()
   ax.imshow(im1)
+  st.image(im1, caption='School Map', use_column_width=True)
   
   draw = ImageDraw.Draw(im1)
   
