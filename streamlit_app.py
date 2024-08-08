@@ -172,8 +172,8 @@ if uploaded_file is not None:
   
   was_sensor_clicked = {}
   # Function to display temperature when a dot is clicked
- if canvas_result.json_data is not None:
-   for obj in canvas_result.json_data["objects"]:
+  if canvas_result.json_data is not None:
+    for obj in canvas_result.json_data["objects"]:
         x_click = obj["left"]
         y_click = obj["top"]
             
