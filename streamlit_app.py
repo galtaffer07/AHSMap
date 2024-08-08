@@ -159,7 +159,7 @@ if uploaded_file is not None:
   
   was_sensor_clicked = {}
   # Function to display temperature when a dot is clicked
-  def on_click(event):
+  def find_closest_sensor(x_click, y_click):
       closest_sensor = None
       min_distance = float('inf')
       
@@ -184,7 +184,6 @@ if uploaded_file is not None:
           st.write('No sensor found at this location.')
   
   # Connect the click event to the function    
-  cid = fig.canvas.mpl_connect('button_press_event', on_click)
   
   st.pyplot(fig)
       
@@ -194,7 +193,7 @@ if uploaded_file is not None:
   
   #print(f'Coordinates: ({x}, {y})')
   
-  fig.canvas.mpl_disconnect(cid)
+  #fig.canvas.mpl_disconnect(cid)
 else:
   st.write("Make sure to upload a CSV file from Metasys!")
 
