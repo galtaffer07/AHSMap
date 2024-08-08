@@ -184,7 +184,7 @@ if uploaded_file is not None:
               median_temp = medians_dict[closest_sensor, 'N/A']
               clicked = ax.text(x_click, y_click, f'{median_temp:.1f}°F', fontsize=12, color='blue')
               was_sensor_clicked[closest_sensor] = clicked
-      plt.draw()  # Update the plot with the text
+          plt.draw()  # Update the plot with the text
   
   # Connect the click event to the function    
   cid = fig.canvas.mpl_connect('button_press_event', on_click)
