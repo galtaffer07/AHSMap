@@ -1,6 +1,10 @@
 import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import datetime
+from PIL import Image, ImageDraw, ImageFont
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+
+st.title("AHS Map")
+
