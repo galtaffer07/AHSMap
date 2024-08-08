@@ -96,16 +96,16 @@ if uploaded_file is not None:
    
   im1 = Image.open("assets/Screenshot 2024-07-26 120058.png")
   st.write("Click on the map to get temperature details.")
-    canvas_result = st_canvas(
-        fill_color="rgba(255, 165, 0, 0.3)",  # Fills the circle with orange
-        stroke_width=5,
-        background_image=floor_plan,
-        update_streamlit=True,
-        height=floor_plan.height,
-        width=floor_plan.width,
-        drawing_mode="point",
-        key="canvas",
-    )
+  canvas_result = st_canvas(
+      fill_color="rgba(255, 165, 0, 0.3)",  # Fills the circle with orange
+      stroke_width=5,
+      background_image=floor_plan,
+      update_streamlit=True,
+      height=floor_plan.height,
+      width=floor_plan.width,
+      drawing_mode="point",
+      key="canvas",
+  )
   #im2
   #im3
   
