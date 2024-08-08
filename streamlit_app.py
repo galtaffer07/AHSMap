@@ -100,7 +100,7 @@ if uploaded_file is not None:
   
   fig, ax = plt.subplots()
   ax.imshow(im1)
-  st.image(im1, caption='School Map', use_column_width=True)
+  #st.image(im1, caption='School Map', use_column_width=True)
   
   draw = ImageDraw.Draw(im1)
   
@@ -186,7 +186,7 @@ if uploaded_file is not None:
   # Connect the click event to the function    
   cid = fig.canvas.mpl_connect('button_press_event', on_click)
   
-  plt.show()
+  st.image(im1, caption='School Map', use_column_width=True)
       
   
   #print(carbon_levels_without_holidays[firstFloor])
