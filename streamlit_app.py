@@ -173,25 +173,25 @@ if uploaded_file is not None:
   was_sensor_clicked = {}
   # Function to display temperature when a dot is clicked
  if canvas_result.json_data is not None:
-      for obj in canvas_result.json_data["objects"]:
-          x_click = obj["left"]
-          y_click = obj["top"]
+   for obj in canvas_result.json_data["objects"]:
+        x_click = obj["left"]
+        y_click = obj["top"]
             
-          closest_sensor = None
-          min_distance = float('inf')
+        closest_sensor = None
+        min_distance = float('inf')
             
-          for sensor, (x, y) in coordinates.items():
-              distance = np.sqrt((x_click - x) ** 2 + (y_click - y) ** 2)
-              if distance < min_distance:
-                  min_distance = distance
-                  closest_sensor = sensor
+        for sensor, (x, y) in coordinates.items():
+            distance = np.sqrt((x_click - x) ** 2 + (y_click - y) ** 2)
+            if distance < min_distance:
+                min_distance = distance
+                closest_sensor = sensor
             
-          if closest_sensor and min_distance < 20:  # Adjust threshold as needed
-              median_temp = medians_dict.get(closest_sensor, 'N/A')
-              st.write(f'Selected Sensor: {closest_sensor}')
-              st.write(f'Median Temperature: {median_temp:.1f}°F')
-          else:
-              st.write('No sensor found at this location.')
+        if closest_sensor and min_distance < 20:  # Adjust threshold as needed
+            median_temp = medians_dict.get(closest_sensor, 'N/A')
+            st.write(f'Selected Sensor: {closest_sensor}')
+            st.write(f'Median Temperature: {median_temp:.1f}°F')
+        else:
+            st.write('No sensor found at this location.')
   
   # Connect the click event to the function    
       
