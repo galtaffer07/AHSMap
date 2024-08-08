@@ -159,7 +159,7 @@ if uploaded_file is not None:
   # Function to display temperature when a dot is clicked
   for sensor, coord in coordinates.items():
         x, y = coord
-        ax.plot(x, y, 'ro', picker=True)  # Enable picking
+        ax.plot(x, y, 'ro', picker=5)  # Enable picking
     
     # Function to display temperature when a dot is clicked
   def on_pick(event):
@@ -185,6 +185,8 @@ if uploaded_file is not None:
   #print(f'Coordinates: ({x}, {y})')
   
   fig.canvas.mpl_disconnect(cid)
+
+  st.write("Click on a red dot to see the temperature.")
 else:
   st.write("Make sure to upload a CSV file from Metasys!")
 
