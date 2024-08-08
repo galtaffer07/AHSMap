@@ -162,15 +162,15 @@ if uploaded_file is not None:
         ax.plot(x, y, 'ro', picker=True)  # Enable picking
     
     # Function to display temperature when a dot is clicked
-    def on_pick(event):
-        artist = event.artist
-        x_click, y_click = artist.get_xdata()[0], artist.get_ydata()[0]
+  def on_pick(event):
+      artist = event.artist
+      x_click, y_click = artist.get_xdata()[0], artist.get_ydata()[0]
 
-        for sensor, coord in coordinates.items():
-            if coord == (x_click, y_click):
-                median_temp = medians_dict.get(sensor, 'N/A')
-                st.write(f'{sensor} Median Temperature: {median_temp:.1f}°F')
-                break
+      for sensor, coord in coordinates.items():
+          if coord == (x_click, y_click):
+              median_temp = medians_dict.get(sensor, 'N/A')
+              st.write(f'{sensor} Median Temperature: {median_temp:.1f}°F')
+              break
 
     cid = fig.canvas.mpl_connect('pick_event', on_pick)
     
