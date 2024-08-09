@@ -164,6 +164,7 @@ if uploaded_file is not None:
     # Function to display temperature when a dot is clicked
   def on_click(event):
     x_click, y_click = event.xdata, event.ydata
+    st.write("Click detected!")
     
     if x_click is None or y_click is None:
         return  # Click was outside the image area
