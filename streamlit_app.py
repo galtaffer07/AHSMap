@@ -162,15 +162,19 @@ if uploaded_file is not None:
         ax.plot(x, y, 'ro', picker=5)  # Enable picking
     
     # Function to display temperature when a dot is clicked
-  def on_pick(event):
-      artist = event.artist
-      x_click, y_click = artist.get_xdata()[0], artist.get_ydata()[0]
+  def on_click(event):
+    x_click, y_click = event.xdata, event.ydata
+    
+    if x_click is None or y_click is None:
+        return  # Click was outside the image area
+    
+    # Find the closest sensor to the click
+    for sensor, (x, y) in coordinates.items():
+        distance = np.sqrt((x_click - x) ** 2 + (y_click - y) ** 2)
+        if distance < 10:  # Click threshold
+            st.write(f'{sensor}: {temperatures[sensor]:.1f}°F')
+            break
 
-      for sensor, coord in coordinates.items():
-          if coord == (x_click, y_click):
-              median_temp = medians_dict.get(sensor, 'N/A')
-              st.write(f'{sensor} Median Temperature: {median_temp:.1f}°F')
-              break
 
   cid = fig.canvas.mpl_connect('pick_event', on_pick)
     
