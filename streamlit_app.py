@@ -176,7 +176,7 @@ if uploaded_file is not None:
             break
 
 
-  cid = fig.canvas.mpl_connect('pick_event', on_pick)
+  cid = fig.canvas.mpl_connect('pick_event', on_click)
     
   st.pyplot(fig)
   
