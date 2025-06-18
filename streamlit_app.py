@@ -99,7 +99,7 @@ if uploaded_file is not None:
   w, h = im1.size
 
 # Display the canvas
-canvas_result = st_canvas(
+  canvas_result = st_canvas(
     fill_color="rgba(255, 0, 0, 0.3)",  # Transparent red
     background_image=im1_np,
     update_streamlit=True,
@@ -110,7 +110,7 @@ canvas_result = st_canvas(
 )
 
 # Map coordinates to sensors
-coordinates = {
+  coordinates = {
     'RM116 ZN06  ZN-T': (485.45, 448.79),
     'RM138 ZN09 ZN-T': (811.1, 445.64),
     'RM137 ZN09 ZN-T': (815.72, 408.3),
@@ -126,11 +126,11 @@ coordinates = {
 }
 
 # Get medians as before
-medians = temperature_df.median()
-medians_dict = medians.to_dict()
+  medians = temperature_df.median()
+  medians_dict = medians.to_dict()
 
 # If user clicks
-if canvas_result.json_data is not None:
+  if canvas_result.json_data is not None:
     for obj in canvas_result.json_data["objects"]:
         x_click = obj["left"]
         y_click = obj["top"]
@@ -146,7 +146,7 @@ if canvas_result.json_data is not None:
                 break
 
     st.write("Click on a red dot to see the temperature.")
-else:
+  else:
     st.write("Make sure to upload a CSV file from Metasys!")
   #im2
   #im3
