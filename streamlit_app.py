@@ -95,16 +95,62 @@ if uploaded_file is not None:
   #BEGINNING OF HEATMAP (?) CODE
    
   im1 = Image.open("assets/Screenshot 2024-07-26 120058.png")
-  
+  w, h = im1.size
+
+# Display the canvas
+canvas_result = st_canvas(
+    fill_color="rgba(255, 0, 0, 0.3)",  # Transparent red
+    background_image=im1,
+    update_streamlit=True,
+    height=h,
+    width=w,
+    drawing_mode="point",
+    key="canvas",
+)
+
+# Map coordinates to sensors
+coordinates = {
+    'RM116 ZN06  ZN-T': (485.45, 448.79),
+    'RM138 ZN09 ZN-T': (811.1, 445.64),
+    'RM137 ZN09 ZN-T': (815.72, 408.3),
+    'RM139 ZN09 ZN-T': (785.93, 440.61),
+    'Cafe UV08 ZN08 ZN-T': (738.65, 374.67),
+    'Cafe UV01 ZN08 ZN-T': (744.03, 448.18),
+    'Cafe UV14 ZN08 ZN-T': (530.67, 439.22),
+    'Cafe UV02 ZN08ZN-T': (548.6, 380.05),
+    'FieldHouse-NE ZN1 ZN-T': (209.72, 250.95),
+    'FieldHouse-NW ZN1 ZN-T': (53.73, 250.57),
+    'FieldHouse-SE ZN1 ZN-T': (213.3, 512.73),
+    'FieldHouse-SW ZN1 ZN-T': (55.52, 510.94)
+}
+
+# Get medians as before
+medians = temperature_df.median()
+medians_dict = medians.to_dict()
+
+# If user clicks
+if canvas_result.json_data is not None:
+    for obj in canvas_result.json_data["objects"]:
+        x_click = obj["left"]
+        y_click = obj["top"]
+        # Find closest sensor
+        for sensor, (x, y) in coordinates.items():
+            dist = np.sqrt((x_click - x)**2 + (y_click - y)**2)
+            if dist < 10:
+                temp = medians_dict.get(sensor, None)
+                if temp:
+                    st.write(f"{sensor}: {temp:.1f}°F")
+                else:
+                    st.write(f"{sensor}: No temperature data")
+                break
   #im2
   #im3
   
   
-  fig, ax = plt.subplots()
-  ax.imshow(im1)
+  
   #st.image(im1, caption='School Map', use_column_width=True)
   
-  draw = ImageDraw.Draw(im1)
+ 
   
   #coords=[]
   
@@ -125,61 +171,6 @@ if uploaded_file is not None:
   
   #pain and suffering - gathering each individual ordered pair
   
-  floor_columns = [col for col in carbon_levels_without_holidays.columns if col.startswith('RM1')]
-  specific_sensors = [col for col in carbon_levels_without_holidays.columns if 'FieldHouse' in col or 'Cafe' in col]
-  filtered_columns = floor_columns + specific_sensors
-  filtered_df = carbon_levels_without_holidays[filtered_columns]
-  temperature_columns = [col for col in filtered_df.columns if 'T' in col and 'CO2' not in col and 'Q' not in col]
-  temperature_df = filtered_df[temperature_columns]
-
-  
-  
-  coordinates = {
-      'RM116 ZN06  ZN-T': (485.45, 448.79),
-      'RM138 ZN09 ZN-T': (811.1, 445.64),
-      'RM137 ZN09 ZN-T': (815.72, 408.3),
-      'RM139 ZN09 ZN-T': (785.93, 440.61),
-      'Cafe UV08 ZN08 ZN-T': (738.65, 374.67),
-      'Cafe UV01 ZN08 ZN-T': (744.03, 448.18),
-      'Cafe UV14 ZN08 ZN-T': (530.67, 439.22),
-      'Cafe UV02 ZN08ZN-T': (548.6, 380.05),
-      'FieldHouse-NE ZN1 ZN-T': (209.72, 250.95),
-      'FieldHouse-NW ZN1 ZN-T': (53.73, 250.57),
-      'FieldHouse-SE ZN1 ZN-T': (213.3, 512.73),
-      'FieldHouse-SW ZN1 ZN-T': (55.52, 510.94)
-      }
-      
-  
-  medians = temperature_df.median()
-  medians_dict = medians.to_dict()
-
-
-  
-  was_sensor_clicked = {}
-  # Function to display temperature when a dot is clicked
-  for sensor, coord in coordinates.items():
-        x, y = coord
-        ax.plot(x, y, 'ro', picker=5)  # Enable picking
-    
-    # Function to display temperature when a dot is clicked
-  def on_click(event):
-    x_click, y_click = event.xdata, event.ydata
-    st.write("Click detected!")
-    
-    if x_click is None or y_click is None:
-        return  # Click was outside the image area
-    
-    # Find the closest sensor to the click
-    for sensor, (x, y) in coordinates.items():
-        distance = np.sqrt((x_click - x) ** 2 + (y_click - y) ** 2)
-        if distance < 10:  # Click threshold
-            st.write(f'{sensor}: {medians_dict[sensor]:.1f}°F')
-            break
-
-
-  cid = fig.canvas.mpl_connect('button_press_event', on_click)
-    
-  st.pyplot(fig)
   
   # Connect the click event to the function    
       
