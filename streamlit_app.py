@@ -143,6 +143,10 @@ if canvas_result.json_data is not None:
                 else:
                     st.write(f"{sensor}: No temperature data")
                 break
+
+    st.write("Click on a red dot to see the temperature.")
+else:
+    st.write("Make sure to upload a CSV file from Metasys!")
   #im2
   #im3
   
@@ -181,9 +185,7 @@ if canvas_result.json_data is not None:
   #print(f'Coordinates: ({x}, {y})')
   
 
-  st.write("Click on a red dot to see the temperature.")
-else:
-  st.write("Make sure to upload a CSV file from Metasys!")
+  
 
 
 
