@@ -95,12 +95,13 @@ if uploaded_file is not None:
   #BEGINNING OF HEATMAP (?) CODE
    
   im1 = Image.open("assets/Screenshot 2024-07-26 120058.png")
+  im1_np = np.array(im1)
   w, h = im1.size
 
 # Display the canvas
 canvas_result = st_canvas(
     fill_color="rgba(255, 0, 0, 0.3)",  # Transparent red
-    background_image=im1,
+    background_image=im1_np,
     update_streamlit=True,
     height=h,
     width=w,
