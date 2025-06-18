@@ -173,11 +173,11 @@ if uploaded_file is not None:
     for sensor, (x, y) in coordinates.items():
         distance = np.sqrt((x_click - x) ** 2 + (y_click - y) ** 2)
         if distance < 10:  # Click threshold
-            st.write(f'{sensor}: {temperatures[sensor]:.1f}°F')
+            st.write(f'{sensor}: {medians_dict[sensor]:.1f}°F')
             break
 
 
-  cid = fig.canvas.mpl_connect('pick_event', on_click)
+  cid = fig.canvas.mpl_connect('button_press_event', on_click)
     
   st.pyplot(fig)
   
@@ -189,7 +189,6 @@ if uploaded_file is not None:
   
   #print(f'Coordinates: ({x}, {y})')
   
-  fig.canvas.mpl_disconnect(cid)
 
   st.write("Click on a red dot to see the temperature.")
 else:
