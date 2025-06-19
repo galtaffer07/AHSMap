@@ -113,6 +113,13 @@ if uploaded_file is not None:
     'FieldHouse-SE ZN1 ZN-T': (213.3, 512.73),
     'FieldHouse-SW ZN1 ZN-T': (55.52, 510.94)
   }
+
+  floor_columns = [col for col in carbon_levels_without_holidays.columns if col.startswith('RM1')]
+  specific_sensors = [col for col in carbon_levels_without_holidays.columns if 'FieldHouse' in col or 'Cafe' in col]
+  filtered_columns = floor_columns + specific_sensors
+  filtered_df = carbon_levels_without_holidays[filtered_columns]
+  temperature_columns = [col for col in filtered_df.columns if 'T' in col and 'CO2' not in col and 'Q' not in col]
+  temperature_df = filtered_df[temperature_columns]
  
   medians = temperature_df.median()
   medians_dict = medians.to_dict()
