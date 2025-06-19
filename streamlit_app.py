@@ -95,12 +95,38 @@ if uploaded_file is not None:
   
   
   #BEGINNING OF HEATMAP (?) CODE
-   
+   # Display the school map (static image)
   im1 = Image.open("assets/Screenshot 2024-07-26 120058.png")
-  w, h = im1.size
+  st.image(im1, caption="School Map", use_column_width=False)
+
+  st.write("Click simulation: Select a coordinate near a sensor")
+
+# Ask user to input approximate x and y coordinates
+  x_click = st.slider("X coordinate", min_value=0, max_value=im1.size[0], value=100)
+  y_click = st.slider("Y coordinate", min_value=0, max_value=im1.size[1], value=100)
+
+# Find closest sensor to clicked coordinates
+  closest_sensor = None
+  min_distance = float("inf")
+
+  for sensor, (x, y) in coordinates.items():
+    dist = np.sqrt((x_click - x)**2 + (y_click - y)**2)
+    if dist < min_distance:
+        min_distance = dist
+        closest_sensor = sensor
+
+# Show result
+  if closest_sensor:
+    temp = medians_dict.get(closest_sensor)
+    if temp:
+        st.write(f"Closest sensor: **{closest_sensor}** at ({coordinates[closest_sensor][0]:.0f}, {coordinates[closest_sensor][1]:.0f})")
+        st.write(f"Median Temperature: **{temp:.1f}°F**")
+    else:
+        st.write(f"{closest_sensor}: No temperature data.")
+  
 
 # Display the canvas
-  canvas_result = st_canvas(
+ ''' canvas_result = st_canvas(
     fill_color="rgba(255, 0, 0, 0.3)",  # Transparent red
     background_image=im1,
     update_streamlit=True,
@@ -144,11 +170,11 @@ if uploaded_file is not None:
                     st.write(f"{sensor}: {temp:.1f}°F")
                 else:
                     st.write(f"{sensor}: No temperature data")
-                break
+                break#
 
-    st.write("Click on a red dot to see the temperature.")
-  else:
-    st.write("Make sure to upload a CSV file from Metasys!")
+  #  st.write("Click on a red dot to see the temperature.")
+  #else:
+    #st.write("Make sure to upload a CSV file from Metasys!")
   #im2
   #im3
   
@@ -188,7 +214,7 @@ if uploaded_file is not None:
   
 
   
-
+'''
 
 
 
