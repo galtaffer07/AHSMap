@@ -99,7 +99,7 @@ if uploaded_file is not None:
   im1 = Image.open("assets/Screenshot 2024-07-26 120058.png")
   st.image(im1, caption="School Map", use_column_width=False)
 
-  coordinates = {More actions
+  coordinates = {
     'RM116 ZN06  ZN-T': (485.45, 448.79),
     'RM138 ZN09 ZN-T': (811.1, 445.64),
     'RM137 ZN09 ZN-T': (815.72, 408.3),
