@@ -5,7 +5,7 @@ import numpy as np
 import datetime
 from PIL import Image, ImageDraw, ImageFont
 from streamlit_drawable_canvas import st_canvas
-from streamlit.components.v1 import _image_to_url  # try??
+
 
 
 
