@@ -114,7 +114,7 @@ if uploaded_file is not None:
     'FieldHouse-SW ZN1 ZN-T': (55.52, 510.94)
   }
  
-  medians = temperature_df.median()More actions
+  medians = temperature_df.median()
   medians_dict = medians.to_dict()
   
   st.write("Click simulation: Select a coordinate near a sensor")
