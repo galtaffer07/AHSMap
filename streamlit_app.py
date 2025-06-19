@@ -99,6 +99,21 @@ if uploaded_file is not None:
   im1 = Image.open("assets/Screenshot 2024-07-26 120058.png")
   st.image(im1, caption="School Map", use_column_width=False)
 
+  coordinates = {More actions
+    'RM116 ZN06  ZN-T': (485.45, 448.79),
+    'RM138 ZN09 ZN-T': (811.1, 445.64),
+    'RM137 ZN09 ZN-T': (815.72, 408.3),
+    'RM139 ZN09 ZN-T': (785.93, 440.61),
+    'Cafe UV08 ZN08 ZN-T': (738.65, 374.67),
+    'Cafe UV01 ZN08 ZN-T': (744.03, 448.18),
+    'Cafe UV14 ZN08 ZN-T': (530.67, 439.22),
+    'Cafe UV02 ZN08ZN-T': (548.6, 380.05),
+    'FieldHouse-NE ZN1 ZN-T': (209.72, 250.95),
+    'FieldHouse-NW ZN1 ZN-T': (53.73, 250.57),
+    'FieldHouse-SE ZN1 ZN-T': (213.3, 512.73),
+    'FieldHouse-SW ZN1 ZN-T': (55.52, 510.94)
+  }
+
   st.write("Click simulation: Select a coordinate near a sensor")
 
 # Ask user to input approximate x and y coordinates
