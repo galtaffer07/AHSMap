@@ -113,7 +113,10 @@ if uploaded_file is not None:
     'FieldHouse-SE ZN1 ZN-T': (213.3, 512.73),
     'FieldHouse-SW ZN1 ZN-T': (55.52, 510.94)
   }
-
+ 
+  medians = temperature_df.median()More actions
+  medians_dict = medians.to_dict()
+  
   st.write("Click simulation: Select a coordinate near a sensor")
 
 # Ask user to input approximate x and y coordinates
